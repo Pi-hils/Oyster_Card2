@@ -1,6 +1,8 @@
 require 'oystercard'
 
 describe Oystercard do
+let(:entry_station) {double(:entry_station)}
+
 
     describe "balance" do
      it "#must have no money on card" do
@@ -20,7 +22,7 @@ describe Oystercard do
 
    it "#touch_in" do
     subject.top_up(Oystercard::MAX_CAPACITY)
-    expect(subject.touch_in).to eq "this works"
+    expect(subject.touch_in(entry_station)).to eq "this works"
    end
 
     it "#touch_out" do
@@ -29,7 +31,7 @@ describe Oystercard do
 
     it "#in_journey" do
         subject.top_up(Oystercard::MAX_CAPACITY)
-        subject.touch_in
+        subject.touch_in(entry_station)
         expect(subject.in_journey?).to eq true
     end
 
@@ -44,5 +46,11 @@ describe Oystercard do
 
     it "#charging amount " do
         expect {subject.touch_out}.to change{subject.balance}.by (- Oystercard::MINIMUM_AMOUNT)
+    end
+
+    it 'expects card to remember entry station' do
+      card = Oystercard.new
+      card.top_up(Oystercard::MAX_CAPACITY)
+      expect(card.touch_in(entry_station)).to eq "this works"
     end
 end
