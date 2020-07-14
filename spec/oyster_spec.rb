@@ -9,20 +9,21 @@ describe Oystercard do
     end
   end
     it "#is able to top" do
-        expect(subject.top_up(5)).to eq 5
+        expect(subject.top_up(Oystercard::MAX_CAPACITY)).to eq Oystercard::MAX_CAPACITY
     end
 
     it "#maximum limit on card is eq 90" do
-        oyster = Oystercard.new(90)
-     expect { oyster.top_up(1) }.to raise_error "amount more than 90"
+        oyster = Oystercard.new(Oystercard::MAX_CAPACITY)
+     expect { oyster.top_up(Oystercard::MINIMUM_AMOUNT) }.to raise_error "amount more than #{Oystercard::MAX_CAPACITY}"
     end
 
     it "#deducted a certain amaount from card balance" do
-        subject.top_up(10)
-        expect(subject.deduct(5)).to eq "money deducted"
+        subject.top_up(Oystercard::MAX_CAPACITY)
+        expect(subject.deduct(Oystercard::MINIMUM_AMOUNT)).to eq "money deducted"
     end
 
    it "#touch_in" do
+    subject.top_up(Oystercard::MAX_CAPACITY)
     expect(subject.touch_in).to eq "this works"
    end
 
@@ -31,6 +32,7 @@ describe Oystercard do
     end
 
     it "#in_journey" do
+        subject.top_up(Oystercard::MAX_CAPACITY)
         subject.touch_in
         expect(subject.in_journey?).to eq true
     end
@@ -38,5 +40,9 @@ describe Oystercard do
     it "#not in_journey" do
         subject.touch_out
         expect(subject.in_journey?).to eq false
+    end
+
+    it "#raises error" do
+        expect {raise 'not enough amount on card'}.to raise_error
     end
 end
