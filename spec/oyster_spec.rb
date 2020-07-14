@@ -17,10 +17,6 @@ describe Oystercard do
      expect { oyster.top_up(Oystercard::MINIMUM_AMOUNT) }.to raise_error "amount more than #{Oystercard::MAX_CAPACITY}"
     end
 
-    it "#deducted a certain amaount from card balance" do
-        subject.top_up(Oystercard::MAX_CAPACITY)
-        expect(subject.deduct(Oystercard::MINIMUM_AMOUNT)).to eq "money deducted"
-    end
 
    it "#touch_in" do
     subject.top_up(Oystercard::MAX_CAPACITY)
@@ -44,5 +40,9 @@ describe Oystercard do
 
     it "#raises error" do
         expect {raise 'not enough amount on card'}.to raise_error
+    end
+
+    it "#charging amount " do
+        expect {subject.touch_out}.to change{subject.balance}.by (- Oystercard::MINIMUM_AMOUNT)
     end
 end
