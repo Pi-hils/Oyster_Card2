@@ -18,7 +18,7 @@ class Oystercard
         def touch_in(entry_station)
             raise "not enough amount on card" if @balance < MINIMUM_AMOUNT
              @entry_station = entry_station
-            "welcome to #{entry_station}"
+            "Welcome to #{entry_station}"
         end
 
         def touch_out(exit)

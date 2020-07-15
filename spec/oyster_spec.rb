@@ -27,7 +27,7 @@ let(:exit) {double(:exit_station)}
 
    it "#touch_in" do
     subject.top_up(Oystercard::MAX_CAPACITY)
-    expect(subject.touch_in(entry_station)).to eq "welcome to #{entry_station}"
+    expect(subject.touch_in(entry_station)).to eq "Welcome to #{entry_station}"
    end
 
     it "#touch_out" do
@@ -65,7 +65,7 @@ end
     it 'expects card to remember entry station' do
       subject = Oystercard.new
       subject.top_up(Oystercard::MAX_CAPACITY)
-      expect(subject.touch_in(entry_station)).to eq "welcome to #{entry_station}"
+      expect(subject.touch_in(entry_station)).to eq "Welcome to #{entry_station}"
     end
 
     it "starts with an #empty journey" do
