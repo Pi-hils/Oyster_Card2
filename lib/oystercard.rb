@@ -6,6 +6,7 @@ class Oystercard
 
         def initialize(balance = DEFAULT_BALANCE)
             @balance = balance
+            @in_use = false
             @journey_history = []
         end
 
@@ -16,23 +17,20 @@ class Oystercard
 
         def touch_in(entry_station)
             raise "not enough amount on card" if @balance < MINIMUM_AMOUNT
-            @entry_station = entry_station
-            "this works"
+             @entry_station = entry_station
+            "welcome to #{entry_station}"
         end
 
         def touch_out(exit)
             deduct(MINIMUM_AMOUNT)
-            @journey_history << {entry: @entry_station, exit: exit}
             @entry_station = nil
+            @journey_history << {entry: @entry_station, exit: exit}
             "touching out"
         end
 
         def in_journey?
-            if @entry_station != nil
-              true
-            else
-              false
-            end
+            @entry_station != nil ? true : false
+    
         end
 
         private
@@ -41,4 +39,6 @@ class Oystercard
             @balance -= amount
             "money deducted"
         end
+
+    
 end
